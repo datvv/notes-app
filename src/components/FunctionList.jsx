@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteNote } from "../app/noteSlice";
+import { changeEditMode, deleteNote } from "../app/noteSlice";
 
 const FunctionList = () => {
   const dispatch = useDispatch();
@@ -14,7 +14,10 @@ const FunctionList = () => {
 
   return (
     <div>
-      <button className=" hover:bg-gray-200 font-bold py-2 px-2 rounded inline-flex items-center ml-5 mr-1">
+      <button
+        onClick={() => dispatch(changeEditMode(true))}
+        className=" hover:bg-gray-200 font-bold py-2 px-2 rounded inline-flex items-center ml-5 mr-1"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -30,7 +33,10 @@ const FunctionList = () => {
           />
         </svg>
       </button>
-      <button className=" hover:bg-gray-200 font-bold py-2 px-2 rounded inline-flex items-center mr-1">
+      <button
+        onClick={() => dispatch(changeEditMode(false))}
+        className=" hover:bg-gray-200 font-bold py-2 px-2 rounded inline-flex items-center mr-1"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

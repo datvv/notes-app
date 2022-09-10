@@ -5,8 +5,6 @@ const rootReducer = {
   note: noteSlice,
 };
 
-console.log("rootReducer :", rootReducer);
-
 const store = configureStore({
   reducer: rootReducer,
 });

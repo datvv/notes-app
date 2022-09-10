@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createNote, fetchNotes, updateNote } from "../app/noteSlice";
+import { createNote, updateNote } from "../app/noteSlice";
+import { formatIsoDateStr } from "../app/utils";
 
 const NoteEditor = () => {
   const dispatch = useDispatch();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  let currentNote = [];
+  const [currentNote, setCurrentNote] = useState(null);
+  const [showCurrentTime, setShowCurrentTime] = useState(true);
 
   const { notes, activatedId } = useSelector((state) => ({
     notes: state.note.notes,
@@ -15,13 +17,14 @@ const NoteEditor = () => {
   }));
 
   useEffect(() => {
-    currentNote = notes.filter((item) => item.id == activatedId);
+    let selectedItem = notes.filter((item) => item.id == activatedId);
+    setCurrentNote(selectedItem[0] ? selectedItem[0] : null);
   }, [activatedId, notes]);
 
   useEffect(() => {
-    if (currentNote && currentNote.length > 0) {
-      setTitle(currentNote[0].title);
-      setContent(currentNote[0].content);
+    if (currentNote) {
+      setTitle(currentNote.title);
+      setContent(currentNote.content);
     }
   }, [currentNote]);
 
@@ -34,12 +37,22 @@ const NoteEditor = () => {
 
   return (
     <div className="border border-spacing-2 h-full">
-      <h3 className="text-center">Time</h3>
+      {showCurrentTime && (
+        <h3 className="text-center p-1">
+          {formatIsoDateStr(new Date().toISOString(), true)}
+        </h3>
+      )}
+      {!showCurrentTime && (
+        <h3 className="text-center p-1">
+          Created:{" "}
+          {formatIsoDateStr(currentNote ? currentNote.created_at : "", true)}
+        </h3>
+      )}
       <div className="px-4">
         <input
           type="text"
           id="first_name"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 my-3"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
@@ -47,7 +60,7 @@ const NoteEditor = () => {
         <textarea
           type="text"
           id="first_name"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 my-3"
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />

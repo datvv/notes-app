@@ -5,28 +5,17 @@ import { fetchNotes } from "../app/noteSlice";
 
 const NoteList = () => {
   const notes = useSelector((state) => state.note.notes);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchNotes());
-  }, []);
-
-  // const getNotes = async () => {
-  //   let data = await fetchNotesAPI();
-  //   if (data) {
-  //     setNotes(data);
-  //   }
-  // };
 
   return (
     <div className="h-[750px] overflow-y-scroll">
-      {notes.map((item, index) => (
-        <NoteItem
-          key={index}
-          id={item.id}
+      {/* id={item.id}
           title={item.title}
           content={item.content}
-        />
+          created_at={item.created_at}
+          updated_at={item.updated_at} */}
+
+      {notes.map((item, index) => (
+        <NoteItem key={index} item={item} />
       ))}
     </div>
   );

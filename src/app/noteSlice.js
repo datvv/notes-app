@@ -42,22 +42,21 @@ const noteSlice = createSlice({
   name: "note",
   initialState: {
     notes: [],
-    editable: true,
+    editable: false,
     activatedId: "",
   },
   reducers: {
     selectItem: (state, action) => {
       state.activatedId = action.payload;
+      state.editable = true;
     },
     removeSelectedItem: (state, action) => {
       state.activatedId = "";
     },
-    // addNote: (state, action) => {
-    //   state.push(action.payload);
-    // },
-    // deleteNote: (state, action) => {
-    //   state.splice(action.payload, 1);
-    // },
+    changeEditMode: (state, action) => {
+      state.editable = action.payload;
+      state.activatedId = "";
+    },
   },
   extraReducers: {
     [fetchNotes.fulfilled]: (state, action) => {
@@ -67,5 +66,5 @@ const noteSlice = createSlice({
 });
 
 const { actions, reducer } = noteSlice;
-export const { selectItem, removeSelectedItem } = actions;
+export const { selectItem, removeSelectedItem, changeEditMode } = actions;
 export default reducer;

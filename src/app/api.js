@@ -4,7 +4,7 @@ export async function fetchNotesApi() {
   try {
     let { data } = await supabase
       .from("notes")
-      .select("id,title,content, created_at");
+      .select("id,title,content, created_at, updated_at");
     return data.sort((a, b) => b.id - a.id);
   } catch (error) {
     console.log(error.message);
