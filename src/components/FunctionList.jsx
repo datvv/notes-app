@@ -1,6 +1,17 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteNote } from "../app/noteSlice";
 
 const FunctionList = () => {
+  const dispatch = useDispatch();
+  const activatedId = useSelector((state) => state.note.activatedId);
+
+  const deleteCurrentSelectedItem = () => {
+    if (activatedId) {
+      dispatch(deleteNote(activatedId));
+    }
+  };
+
   return (
     <div>
       <button className=" hover:bg-gray-200 font-bold py-2 px-2 rounded inline-flex items-center ml-5 mr-1">
@@ -35,7 +46,10 @@ const FunctionList = () => {
           />
         </svg>
       </button>
-      <button className=" hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+      <button
+        onClick={() => deleteCurrentSelectedItem()}
+        className=" hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

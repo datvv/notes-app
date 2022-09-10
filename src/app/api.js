@@ -19,3 +19,11 @@ export async function insertNoteApi(noteItem) {
     console.log(error);
   }
 }
+
+export async function deleteNoteApi(noteId) {
+  try {
+    await supabase.from("notes").delete().eq("id", noteId);
+  } catch (error) {
+    console.log(error);
+  }
+}

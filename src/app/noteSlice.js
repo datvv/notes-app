@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { insertNoteApi, fetchNotesApi } from "./api";
+import { insertNoteApi, fetchNotesApi, deleteNoteApi } from "./api";
 
 export const createNote = createAsyncThunk(
   "notes/createNote",
@@ -12,9 +12,16 @@ export const createNote = createAsyncThunk(
 export const fetchNotes = createAsyncThunk(
   "notes/fetchNotes",
   async (params, thunkApi) => {
-    const notes = await fetchNotesApi();
-    console.log("/fetchNote: ", notes);
-    return notes;
+    return await fetchNotesApi();
+  }
+);
+
+export const deleteNote = createAsyncThunk(
+  "notes/deleteNote",
+  async (params, thunkApi) => {
+    await deleteNoteApi(params);
+    thunkApi.dispatch(removeSelectedItem());
+    thunkApi.dispatch(fetchNotes());
   }
 );
 
@@ -28,6 +35,9 @@ const noteSlice = createSlice({
   reducers: {
     selectItem: (state, action) => {
       state.activatedId = action.payload;
+    },
+    removeSelectedItem: (state, action) => {
+      state.activatedId = "";
     },
     // addNote: (state, action) => {
     //   state.push(action.payload);
@@ -44,5 +54,5 @@ const noteSlice = createSlice({
 });
 
 const { actions, reducer } = noteSlice;
-export const { selectItem, deleteNote } = actions;
+export const { selectItem, removeSelectedItem } = actions;
 export default reducer;
