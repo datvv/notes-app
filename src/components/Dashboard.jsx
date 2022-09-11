@@ -17,7 +17,7 @@ const Dashboard = () => {
 
   return (
     <div className="flex items-center">
-      <div className="bg-gray-50 h-[80%] overflow-hidden rounded shadow-sm w-[1224px] ">
+      <div className="bg-gray-50 h-[830px] overflow-y-scroll rounded shadow-sm w-[1224px] ">
         <Header />
         <div>
           {(currentMode == appMode.edit || currentMode == appMode.create) && (

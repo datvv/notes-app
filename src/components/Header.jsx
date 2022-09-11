@@ -8,7 +8,7 @@ const Header = () => {
       <div className="w-[90%] block float-left h-full">
         <FunctionList />
       </div>
-      <div className="h-[80%] block float-right h-full">
+      <div className="block float-right h-full">
         <Avatar />
       </div>
     </div>

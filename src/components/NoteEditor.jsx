@@ -45,7 +45,7 @@ const NoteEditor = () => {
       {currentNoteId && (
         <div>
           <h3
-            className="text-center p-1"
+            className="text-center p-1 cursor-pointer text-[18px] text-gray-500"
             onClick={() => setShowCurrentTime(!showCurrentTime)}
           >
             {showCurrentTime
@@ -62,7 +62,7 @@ const NoteEditor = () => {
               type="text"
               id="first_name"
               placeholder="Enter title"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 my-3"
+              className="text-[22px] font-bold bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 my-3"
               value={title}
               onChange={(e) => handleUpdateCurrentNote(e.target.value, "title")}
             />
