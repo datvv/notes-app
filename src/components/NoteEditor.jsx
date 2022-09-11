@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentNote, updateNote, upsertNote } from "../app/noteSlice";
-import { formatIsoDateStr, generateUuid } from "../app/utils";
+import { formatIsoDateStr } from "../app/utils";
 
 const NoteEditor = () => {
   const dispatch = useDispatch();

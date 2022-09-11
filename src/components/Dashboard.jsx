@@ -16,20 +16,22 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="bg-gray-50 h-[80%] overflow-hidden rounded shadow-sm w-[1224px]">
-      <Header />
-      <div>
-        {(currentMode == appMode.edit || currentMode == appMode.create) && (
-          <div className="grid grid-cols-6 h-full">
-            <div className="col-span-2 h-full">
-              <Sidebar />
+    <div className="flex items-center">
+      <div className="bg-gray-50 h-[80%] overflow-hidden rounded shadow-sm w-[1224px] ">
+        <Header />
+        <div>
+          {(currentMode == appMode.edit || currentMode == appMode.create) && (
+            <div className="grid grid-cols-6 h-full">
+              <div className="col-span-2 h-full">
+                <Sidebar />
+              </div>
+              <div className="col-span-4 h-full">
+                <NoteEditor />
+              </div>
             </div>
-            <div className="col-span-4 h-full">
-              <NoteEditor />
-            </div>
-          </div>
-        )}
-        {currentMode == appMode.view && <NoteDashboard />}
+          )}
+          {currentMode == appMode.view && <NoteDashboard />}
+        </div>
       </div>
     </div>
   );
