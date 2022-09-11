@@ -11,9 +11,10 @@ import { generateUuid, getCurrentTimeStr } from "../app/utils";
 
 const FunctionList = () => {
   const dispatch = useDispatch();
-  const currentNoteId = useSelector((state) =>
-    state.note.currentNote ? state.note.currentNote.id : null
-  );
+  const { currentNoteId, currentMode } = useSelector((state) => ({
+    currentNoteId: state.note.currentNote ? state.note.currentNote.id : null,
+    currentMode: state.note.appMode,
+  }));
 
   const deleteCurrentSelectedItem = () => {
     if (currentNoteId) {
@@ -36,8 +37,9 @@ const FunctionList = () => {
   return (
     <div>
       <button
+        disabled={currentMode == appMode.create || currentMode == appMode.edit}
         onClick={() => dispatch(changeMode(appMode.edit))}
-        className=" hover:bg-gray-200 font-bold py-2 px-2 rounded inline-flex items-center ml-5 mr-1"
+        className=" hover:bg-gray-200 font-bold py-2 px-2 rounded inline-flex items-center ml-5 mr-1 disabled:opacity-50"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

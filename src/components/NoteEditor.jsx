@@ -8,11 +8,9 @@ const NoteEditor = () => {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
   const [showCurrentTime, setShowCurrentTime] = useState(true);
 
-  const { notes, currentNoteId, currentNote } = useSelector((state) => ({
-    notes: state.note.notes,
+  const { currentNoteId, currentNote } = useSelector((state) => ({
     currentNote: state.note.currentNote,
     currentNoteId: state.note.currentNote ? state.note.currentNote.id : null,
   }));
@@ -38,7 +36,6 @@ const NoteEditor = () => {
       default:
         return;
     }
-    console.log("handleUpdateCurrentNote - dispatch");
     dispatch(updateCurrentNote(updatedNote));
     dispatch(updateNote(updatedNote));
   };
@@ -47,25 +44,24 @@ const NoteEditor = () => {
     <div className="border border-spacing-2 h-full">
       {currentNoteId && (
         <div>
-          {showCurrentTime && (
-            <h3 className="text-center p-1">
-              {formatIsoDateStr(new Date().toISOString(), true)}
-            </h3>
-          )}
-          {!showCurrentTime && (
-            <h3 className="text-center p-1">
-              Created:{" "}
-              {formatIsoDateStr(
-                currentNote ? currentNote.created_at : "",
-                true
-              )}
-            </h3>
-          )}
+          <h3
+            className="text-center p-1"
+            onClick={() => setShowCurrentTime(!showCurrentTime)}
+          >
+            {showCurrentTime
+              ? formatIsoDateStr(new Date().toISOString(), true)
+              : "Created: " +
+                formatIsoDateStr(
+                  currentNote ? currentNote.created_at : "",
+                  true
+                )}
+          </h3>
 
           <div className="px-4">
             <input
               type="text"
               id="first_name"
+              placeholder="Enter title"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 my-3"
               value={title}
               onChange={(e) => handleUpdateCurrentNote(e.target.value, "title")}
@@ -74,6 +70,8 @@ const NoteEditor = () => {
             <textarea
               type="text"
               id="first_name"
+              rows={6}
+              placeholder="Enter content"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 my-3"
               value={content}
               onChange={(e) =>
