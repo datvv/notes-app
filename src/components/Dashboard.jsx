@@ -5,10 +5,11 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import NoteEditor from "./NoteEditor";
 import NoteDashboard from "./NoteDashboard";
+import { appMode } from "../app/constants";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const editable = useSelector((state) => state.note.editable);
+  const currentMode = useSelector((state) => state.note.appMode);
 
   useEffect(() => {
     dispatch(fetchNotes());
@@ -18,7 +19,7 @@ const Dashboard = () => {
     <div className="bg-gray-50 h-[80%] overflow-hidden rounded shadow-sm w-[1224px]">
       <Header />
       <div>
-        {editable && (
+        {(currentMode == appMode.edit || currentMode == appMode.create) && (
           <div className="grid grid-cols-6 h-full">
             <div className="col-span-2 h-full">
               <Sidebar />
@@ -28,7 +29,7 @@ const Dashboard = () => {
             </div>
           </div>
         )}
-        {!editable && <NoteDashboard />}
+        {currentMode == appMode.view && <NoteDashboard />}
       </div>
     </div>
   );

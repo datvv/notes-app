@@ -10,7 +10,7 @@ const NoteDashboardItem = (props) => {
   return (
     <div>
       <div
-        onClick={() => dispatch(selectItem(item.id))}
+        onClick={() => dispatch(selectItem(item))}
         className="cursor-pointer w-full h-[180px] border-2 border-gray-300 rounded-md px-3 py-3 hover:border-yellow-400 hover:border-3"
       >
         <h3 className="text-[15px] inline-block overflow-hidden text-ellipsis w-full whitespace-nowrap font-semibold">

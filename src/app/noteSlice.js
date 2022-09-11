@@ -5,20 +5,20 @@ import {
   deleteNoteApi,
   updateNoteApi,
 } from "./api";
+import { appMode } from "./constants";
 
 export const createNote = createAsyncThunk(
   "notes/createNote",
   async (params, thunkApi) => {
     await insertNoteApi(params);
-    thunkApi.dispatch(fetchNotes());
   }
 );
 
 export const updateNote = createAsyncThunk(
   "notes/updateNote",
   async (params, thunkApi) => {
+    delete params[("created_at", "updated_at", "index")];
     await updateNoteApi(params);
-    thunkApi.dispatch(fetchNotes());
   }
 );
 
@@ -38,24 +38,43 @@ export const deleteNote = createAsyncThunk(
   }
 );
 
+export const upsertNote = createAsyncThunk(
+  "notes/upsertNote",
+  async (params, thunkApi) => {
+    delete params[("created_at", "updated_at", "index")];
+    await updateNoteApi(params);
+  }
+);
+
 const noteSlice = createSlice({
   name: "note",
   initialState: {
     notes: [],
-    editable: false,
-    activatedId: "",
+    appMode: appMode.edit,
+    currentNote: null,
+    currentIndex: null,
   },
   reducers: {
     selectItem: (state, action) => {
-      state.activatedId = action.payload;
-      state.editable = true;
+      state.currentNote = action.payload;
+      state.currentIndex = action.payload.index;
+      state.appMode = appMode.edit;
     },
     removeSelectedItem: (state, action) => {
-      state.activatedId = "";
+      state.currentNote = null;
     },
-    changeEditMode: (state, action) => {
-      state.editable = action.payload;
-      state.activatedId = "";
+    changeMode: (state, action) => {
+      state.appMode = action.payload;
+      state.currentNote = null;
+    },
+    updateCurrentNote: (state, action) => {
+      state.currentNote = { ...state.currentNote, ...action.payload };
+      state.notes[state.currentIndex] = state.currentNote;
+    },
+    addToNotes: (state, action) => {
+      state.currentNote = action.payload;
+      state.notes = [action.payload, ...state.notes];
+      state.currentIndex = 0;
     },
   },
   extraReducers: {
@@ -66,5 +85,11 @@ const noteSlice = createSlice({
 });
 
 const { actions, reducer } = noteSlice;
-export const { selectItem, removeSelectedItem, changeEditMode } = actions;
+export const {
+  selectItem,
+  removeSelectedItem,
+  changeMode,
+  updateCurrentNote,
+  addToNotes,
+} = actions;
 export default reducer;

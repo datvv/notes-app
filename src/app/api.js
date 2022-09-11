@@ -5,7 +5,7 @@ export async function fetchNotesApi() {
     let { data } = await supabase
       .from("notes")
       .select("id,title,content, created_at, updated_at");
-    return data.sort((a, b) => b.id - a.id);
+    return data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
   } catch (error) {
     console.log(error.message);
     return {};
@@ -34,6 +34,16 @@ export async function updateNoteApi(noteItem) {
       .from("notes")
       .update(noteItem)
       .eq("id", noteItem.id);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function upsertNoteApi(noteItem) {
+  try {
+    const { data, error } = await supabase
+      .from("notes")
+      .insert([noteItem], { upsert: true });
   } catch (error) {
     console.log(error);
   }

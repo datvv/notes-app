@@ -1,3 +1,16 @@
+export function generateUuid() {
+  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+    (
+      c ^
+      (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+    ).toString(16)
+  );
+}
+
+export function getCurrentTimeStr() {
+  return new Date().toISOString();
+}
+
 export function formatIsoDateStr(isoDateStr, showWithDate) {
   if (!isoDateStr) return "";
   const date = new Date(isoDateStr);
@@ -9,7 +22,7 @@ export function formatIsoDateStr(isoDateStr, showWithDate) {
 
 export function formatDate(date) {
   const month = date.toLocaleString("default", { month: "short" });
-  const day = date.getDay();
+  const day = date.getDate();
   const year = date.getFullYear();
   return month + " " + day + ", " + year;
 }

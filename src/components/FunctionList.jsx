@@ -1,21 +1,42 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changeEditMode, deleteNote } from "../app/noteSlice";
+import { appMode } from "../app/constants";
+import {
+  addToNotes,
+  changeMode,
+  createNote,
+  deleteNote,
+} from "../app/noteSlice";
+import { generateUuid, getCurrentTimeStr } from "../app/utils";
 
 const FunctionList = () => {
   const dispatch = useDispatch();
-  const activatedId = useSelector((state) => state.note.activatedId);
+  const currentNoteId = useSelector((state) =>
+    state.note.currentNote ? state.note.currentNote.id : null
+  );
 
   const deleteCurrentSelectedItem = () => {
-    if (activatedId) {
-      dispatch(deleteNote(activatedId));
+    if (currentNoteId) {
+      dispatch(deleteNote(currentNoteId));
     }
+  };
+
+  const handleAddNote = () => {
+    const newNote = {
+      id: generateUuid(),
+      title: "",
+      content: "",
+      created_at: getCurrentTimeStr(),
+    };
+    dispatch(changeMode(appMode.create));
+    dispatch(createNote(newNote));
+    dispatch(addToNotes(newNote));
   };
 
   return (
     <div>
       <button
-        onClick={() => dispatch(changeEditMode(true))}
+        onClick={() => dispatch(changeMode(appMode.edit))}
         className=" hover:bg-gray-200 font-bold py-2 px-2 rounded inline-flex items-center ml-5 mr-1"
       >
         <svg
@@ -34,7 +55,7 @@ const FunctionList = () => {
         </svg>
       </button>
       <button
-        onClick={() => dispatch(changeEditMode(false))}
+        onClick={() => dispatch(changeMode(appMode.view))}
         className=" hover:bg-gray-200 font-bold py-2 px-2 rounded inline-flex items-center mr-1"
       >
         <svg
@@ -53,8 +74,9 @@ const FunctionList = () => {
         </svg>
       </button>
       <button
+        disabled={!currentNoteId}
         onClick={() => deleteCurrentSelectedItem()}
-        className=" hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+        className=" hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center disabled:opacity-50"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +94,10 @@ const FunctionList = () => {
         </svg>
       </button>
       <span className="mr-4 ml-3 border-[0.5px] border-r-gray-200 items-center pt-3"></span>
-      <button className=" hover:bg-gray-200 font-bold py-2 px-2 rounded inline-flex items-center mr-1">
+      <button
+        onClick={() => handleAddNote()}
+        className=" hover:bg-gray-200 font-bold py-2 px-2 rounded inline-flex items-center mr-1 disabled:opacity-50"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
