@@ -4,11 +4,11 @@ import FunctionList from "./FunctionList";
 
 const Header = () => {
   return (
-    <div className="border border-b-3 border-spacing-5 h-[80px] flex items-center">
-      <div className="w-[90%]">
+    <div className="border border-b-3 border-spacing-5 h-[80px] items-center">
+      <div className="w-[90%] block float-left h-full">
         <FunctionList />
       </div>
-      <div className="h-[80%]">
+      <div className="h-[80%] block float-right h-full">
         <Avatar />
       </div>
     </div>

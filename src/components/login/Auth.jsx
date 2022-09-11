@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { isValidEmail } from "../../app/utils";
-import { supabase } from "../../supabase/supabaseClient";
+import { supabase } from "../../app/supabase/supabaseClient";
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);

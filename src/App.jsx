@@ -2,7 +2,7 @@ import "./App.css";
 import Dashboard from "./components/Dashboard";
 
 import { useState, useEffect } from "react";
-import { supabase } from "./supabase/supabaseClient";
+import { supabase } from "./app/supabase/supabaseClient";
 import Auth from "./components/login/Auth";
 
 function App() {

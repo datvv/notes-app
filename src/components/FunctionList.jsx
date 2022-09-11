@@ -35,7 +35,7 @@ const FunctionList = () => {
   };
 
   return (
-    <div>
+    <div className="flex items-center h-full">
       <button
         disabled={currentMode == appMode.create || currentMode == appMode.edit}
         onClick={() => dispatch(changeMode(appMode.edit))}
