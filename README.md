@@ -1,6 +1,6 @@
 # Notes-app
 
-This app was clone follow Apple Notes
+This app is notes app that I create follow Apple Notes
 
 Tech stack: ViteJs + ReactJs + Redux + Tailwindcss
 
