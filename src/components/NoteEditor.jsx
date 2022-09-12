@@ -9,6 +9,7 @@ const NoteEditor = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [showCurrentTime, setShowCurrentTime] = useState(true);
+  const [noteInput, setNoteInput] = useState("");
 
   const { currentNoteId, currentNote } = useSelector((state) => ({
     currentNote: state.note.currentNote,
@@ -40,6 +41,11 @@ const NoteEditor = () => {
     dispatch(updateNote(updatedNote));
   };
 
+  const handleInput = function (data) {
+    setNoteInput(data);
+    console.log("AA :", data);
+  };
+
   return (
     <div className="border border-spacing-2 h-full">
       {currentNoteId && (
@@ -60,19 +66,18 @@ const NoteEditor = () => {
           <div className="px-4">
             <input
               type="text"
-              id="first_name"
               placeholder="Enter title"
-              className="text-[22px] font-bold bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 my-3"
+              className="text-2xl font-bold bg-gray-50  text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 my-3"
               value={title}
               onChange={(e) => handleUpdateCurrentNote(e.target.value, "title")}
             />
-
+            <div className="border border-t-1"></div>
             <textarea
               type="text"
               id="first_name"
-              rows={6}
+              rows={8}
               placeholder="Enter content"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 my-3"
+              className="bg-gray-50  text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 my-3"
               value={content}
               onChange={(e) =>
                 handleUpdateCurrentNote(e.target.value, "content")
