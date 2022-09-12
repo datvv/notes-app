@@ -9,25 +9,22 @@ import { appMode } from "./constants";
 
 export const createNote = createAsyncThunk(
   "notes/createNote",
-  async (params, thunkApi) => {
+  async (params) => {
     await insertNoteApi(params);
   }
 );
 
 export const updateNote = createAsyncThunk(
   "notes/updateNote",
-  async (params, thunkApi) => {
+  async (params) => {
     delete params[("created_at", "updated_at", "index")];
     await updateNoteApi(params);
   }
 );
 
-export const fetchNotes = createAsyncThunk(
-  "notes/fetchNotes",
-  async (params, thunkApi) => {
-    return await fetchNotesApi();
-  }
-);
+export const fetchNotes = createAsyncThunk("notes/fetchNotes", async () => {
+  return await fetchNotesApi();
+});
 
 export const deleteNote = createAsyncThunk(
   "notes/deleteNote",
@@ -40,7 +37,7 @@ export const deleteNote = createAsyncThunk(
 
 export const upsertNote = createAsyncThunk(
   "notes/upsertNote",
-  async (params, thunkApi) => {
+  async (params) => {
     delete params[("created_at", "updated_at", "index")];
     await updateNoteApi(params);
   }

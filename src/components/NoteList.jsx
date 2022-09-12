@@ -7,9 +7,15 @@ const NoteList = () => {
 
   return (
     <div className="h-[750px] overflow-y-scroll">
-      {notes.map((item, index) => (
-        <NoteItem key={index} item={{ ...item, index }} />
-      ))}
+      {notes.length != 0 &&
+        notes.map((item, index) => (
+          <NoteItem key={index} item={{ ...item, index }} />
+        ))}
+      {notes.length == 0 && (
+        <div className="flex text-center text-2xl items-center justify-center text-gray-500 h-full">
+          No Notes
+        </div>
+      )}
     </div>
   );
 };

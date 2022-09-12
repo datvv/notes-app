@@ -30,10 +30,7 @@ export async function deleteNoteApi(noteId) {
 
 export async function updateNoteApi(noteItem) {
   try {
-    const { data, error } = await supabase
-      .from("notes")
-      .update(noteItem)
-      .eq("id", noteItem.id);
+    await supabase.from("notes").update(noteItem).eq("id", noteItem.id);
   } catch (error) {
     console.log(error);
   }
@@ -41,9 +38,7 @@ export async function updateNoteApi(noteItem) {
 
 export async function upsertNoteApi(noteItem) {
   try {
-    const { data, error } = await supabase
-      .from("notes")
-      .insert([noteItem], { upsert: true });
+    await supabase.from("notes").insert([noteItem], { upsert: true });
   } catch (error) {
     console.log(error);
   }
