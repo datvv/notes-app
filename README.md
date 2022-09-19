@@ -6,4 +6,4 @@ Tech stack: ViteJs + ReactJs + Redux + Tailwindcss
 
 API: Supabase
 
-Deployed app here:
+Deployed app here: https://notes-app-reactjs-dvv.herokuapp.com/
