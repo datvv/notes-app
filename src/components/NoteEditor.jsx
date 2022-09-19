@@ -42,7 +42,7 @@ const NoteEditor = () => {
   };
 
   const handleInput = function (data) {
-    setNoteInput(data);
+    setNoteInput("<div>" + data + "</div>");
     console.log("AA :", data);
   };
 
@@ -64,6 +64,15 @@ const NoteEditor = () => {
           </h3>
 
           <div className="px-4">
+            <textarea
+              type="text"
+              rows={8}
+              placeholder="Enter data note"
+              className="text-2xl font-bold bg-gray-50  text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 my-3"
+              value={noteInput}
+              onChange={(e) => handleInput(e.target.value)}
+            />
+
             <input
               type="text"
               placeholder="Enter title"
@@ -71,6 +80,7 @@ const NoteEditor = () => {
               value={title}
               onChange={(e) => handleUpdateCurrentNote(e.target.value, "title")}
             />
+
             <div className="border border-t-1"></div>
             <textarea
               type="text"
