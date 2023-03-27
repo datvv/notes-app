@@ -24,6 +24,7 @@ const NoteEditor = () => {
 
   const handleUpdateCurrentNote = function (data, type) {
     let updatedNote = {};
+    console.log("note editor :", data, type);
     switch (type) {
       case "title":
         setTitle(data);
